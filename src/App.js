@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import Index from './Containers/Index';
+import About from './Containers/About';
 
-function App (props) {
-    const [count, setCount] = useState(1);
-
-    return (
+export default (
+    <>
         <div>
-            <h1>Hello {props.title}! {count}</h1>
-            <button onClick={() => setCount(count + 1)}>累加</button>
+            <Link to="/">Index</Link>
+            &nbsp;
+            <Link to="/about">About</Link>
         </div>
-    )
-}
-
-export default <App title="React SSR"></App>;
+        <Route path="/" exact component={Index} />
+        <Route path="/about" exact component={About} />
+    </>
+)

@@ -1,9 +1,12 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Koa from 'koa';
 import serve from 'koa-static'
 import Router from 'koa-router';
 import App from '../src/App';
+import store from '../src/Store/store';
 
 const app = new Koa();
 const home = new Router();
@@ -11,9 +14,14 @@ const port = process.env.PORT || 9527;
 // 这个地方不能使用__dirname，因为index文件在server里面，__dirname获取不到根路径
 app.use(serve(process.cwd() + '/public'));
 
-home.get('/', ( ctx ) => {
-    // const Page = <App title="React SSR"></App>;
-    const content = renderToString(App);
+home.get('*', (ctx) => {
+    const content = renderToString(
+        <Provider store={store}>
+            <StaticRouter location={ctx.url}>
+                {App}
+            </StaticRouter>
+        </Provider>
+    );
     ctx.body = `
     <!DOCTYPE html>
     <html lang="en">
