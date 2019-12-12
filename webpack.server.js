@@ -20,6 +20,11 @@ module.exports = {
                     presets: [
                         "@babel/preset-react",
                         ["@babel/preset-env"]
+                    ],
+                    plugins: [
+                        "babel-plugin-syntax-async-functions",
+                        "@babel/plugin-transform-async-to-generator",
+                        "@babel/plugin-transform-runtime"
                     ]
                 }
             }

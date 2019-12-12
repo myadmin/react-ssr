@@ -12,12 +12,17 @@ const changeList = list => ({
 });
 
 export const getIndexList = server => {
-    return (dispatch, getState, axiosInstance) => {
+    return async (dispatch, getState, axiosInstance) => {
+        const res = await axios.get('http://localhost:9093/api/course/list');
+        const { list } = res.data;
+        return dispatch(changeList(list));
+        /*
         return axios.get('http://localhost:9093/api/course/list')
             .then(res => {
                 const { list } = res.data;
                 dispatch(changeList(list));
             });
+        */
     }
 }
 
