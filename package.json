@@ -29,6 +29,8 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "concurrently": "^5.0.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-proxy-middleware": "^2.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"

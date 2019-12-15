@@ -6,7 +6,9 @@ function Index(props) {
     const [count, setCount] = useState(1);
 
     useEffect(() => {
-        props.getIndexList()
+        if (!props.list.length) {
+            props.getIndexList()
+        }
     }, []);
 
     return (
@@ -24,6 +26,10 @@ function Index(props) {
         </>
     )
 }
+
+Index.loadData = (store) => {
+    return store.dispatch(getIndexList())
+};
 
 export default connect(
     state => ({ list: state.index.list }),

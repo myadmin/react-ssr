@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../src/Store/store';
-import App from '../src/App';
+import { getClientStore } from '../src/Store/store';
+import routes from '../src/App';
+import Header from '../src/Components/Header';
 
-
+const store = getClientStore();
 const Page = (
     <Provider store={store}>
         <BrowserRouter>
-            {App}
+            <Header />
+            {routes.map(route => (
+                <Route {...route} />
+            ))}
         </BrowserRouter>
     </Provider>
 );

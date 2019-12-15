@@ -15,6 +15,7 @@ export const getIndexList = server => {
     return async (dispatch, getState, axiosInstance) => {
         const res = await axios.get('http://localhost:9093/api/course/list');
         const { list } = res.data;
+        // console.log('list', list);
         return dispatch(changeList(list));
         /*
         return axios.get('http://localhost:9093/api/course/list')
