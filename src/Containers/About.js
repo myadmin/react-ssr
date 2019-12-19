@@ -2,7 +2,7 @@ import React from 'react';
 
 function About () {
     return (
-        <h1>关于</h1>
+        <h1>登录页面</h1>
     )
 }
 

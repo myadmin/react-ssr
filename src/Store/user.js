@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 const GET_INFO = 'USER/USER_INFO';
 
@@ -12,8 +12,8 @@ const changeUserInfo = userinfo => ({
 });
 
 export const getUserInfo = server => {
-    return async (dispatch, getState, axiosInstance) => {
-        const res = await axios.get('http://localhost:9527/api/user/info');
+    return async (dispatch, getState, $axios) => {
+        const res = await $axios.get('/api/user/info');
         const { userinfo } = res.data;
         // console.log('userinfo', userinfo);
         return dispatch(changeUserInfo(userinfo));

@@ -11,9 +11,11 @@ const Page = (
     <Provider store={store}>
         <BrowserRouter>
             <Header />
-            {routes.map(route => (
-                <Route {...route} />
-            ))}
+            <Switch>
+                {routes.map(route => (
+                    <Route {...route} />
+                ))}
+            </Switch>
         </BrowserRouter>
     </Provider>
 );

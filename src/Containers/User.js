@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { getUserInfo } from '../Store/user';
 
 function User(props) {
@@ -9,6 +10,8 @@ function User(props) {
             props.getUserInfo();
         }
     }, []);
+
+    return <Redirect to="/about" />
 
     return (
         <>

@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 const GET_LIST = 'INDEX/GET_LIST';
 
@@ -12,8 +12,8 @@ const changeList = list => ({
 });
 
 export const getIndexList = server => {
-    return async (dispatch, getState, axiosInstance) => {
-        const res = await axios.get('http://localhost:9093/api/course/list');
+    return async (dispatch, getState, $axios) => {
+        const res = await $axios.get('/api/course/list');
         const { list } = res.data;
         // console.log('list', list);
         return dispatch(changeList(list));

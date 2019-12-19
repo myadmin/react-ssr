@@ -3,6 +3,8 @@ import { Route, Link } from 'react-router-dom';
 import Index from './Containers/Index';
 import About from './Containers/About';
 import User from './Containers/User';
+import NotFound from './Containers/NotFound';
+import './App.css';
 
 // export default (
 //     <>
@@ -21,7 +23,7 @@ export default [
         path: '/',
         component: Index,
         // loadData: Index.loadData,
-        // exact: true,
+        exact: true,
         key: 'index'
     },
     {
@@ -36,4 +38,8 @@ export default [
         exact: true,
         key: 'user'
     },
+    {
+        component: NotFound,
+        key: '404'
+    }
 ]
