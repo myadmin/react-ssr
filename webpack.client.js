@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: "development",
@@ -24,8 +25,20 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: ['style-loader', {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true
+                    }
+                }]
             }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.csr.html',
+            template: 'src/index.csr.html',
+            inject: true
+        })
+    ]
 }

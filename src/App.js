@@ -4,7 +4,7 @@ import Index from './Containers/Index';
 import About from './Containers/About';
 import User from './Containers/User';
 import NotFound from './Containers/NotFound';
-import './App.css';
+// import './App.css';
 
 // export default (
 //     <>

@@ -2,6 +2,8 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter, matchPath, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
 import Koa from 'koa';
 import serve from 'koa-static'
 import Router from 'koa-router';
@@ -24,6 +26,13 @@ app.use(bodyParser({
 // 这个地方不能使用__dirname，因为index文件在server里面，__dirname获取不到根路径
 app.use(serve(process.cwd() + '/public'));
 
+function csrRender(ctx) {
+    // 读取csr文件，返回
+    const filename = resolve(process.cwd(), 'public/index.csr.html');
+    const html = readFileSync(filename, 'utf-8');
+    return ctx.body = html;
+}
+
 router.get('*', async (ctx, next) => {
 
     // 设置api反向代理
@@ -32,16 +41,25 @@ router.get('*', async (ctx, next) => {
         await next();
     }
 
+    if (ctx.query._mode === 'csr') {
+        console.log('开启csr降级处理');
+        return csrRender(ctx);
+    }
+
+    // 配置开关开启csr
+
     // 存储网络请求
     const promises = [];
     routes.some(route => {
         const match = matchPath(ctx.path, route);
         if (match) {
             const { loadData } = route.component;
+            console.log(route, loadData);
             if (loadData) {
                 const promise = new Promise((resolve, reject) => {
                     loadData(store).then(resolve).catch(resolve);
-                })
+                });
+                console.log('promise', promise);
                 promises.push(promise);
             }
         }
@@ -55,7 +73,10 @@ router.get('*', async (ctx, next) => {
         // 可以在这里记录错误日志
     }
 
-    const context = {};
+    const context = {
+        css: []
+    };
+
     const content = renderToString(
         <Provider store={store}>
             <StaticRouter location={ctx.url} context={context}>
@@ -78,6 +99,8 @@ router.get('*', async (ctx, next) => {
         ctx.redirect(context.url);
     }
     // console.log('context', context);
+    // console.log(store.getState());
+    const css = context.css.join('\n');
     ctx.body = `
     <!DOCTYPE html>
     <html lang="en">
@@ -86,6 +109,9 @@ router.get('*', async (ctx, next) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>React SSR</title>
+        <style>
+            ${css}
+        </style>
     </head>
     <body>
         <div id="root">${content}</div>
