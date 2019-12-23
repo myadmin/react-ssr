@@ -11,7 +11,7 @@ function User(props) {
         }
     }, []);
 
-    return <Redirect to="/about" />
+    // return <Redirect to="/about" />
 
     return (
         <>

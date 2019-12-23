@@ -54,12 +54,11 @@ router.get('*', async (ctx, next) => {
         const match = matchPath(ctx.path, route);
         if (match) {
             const { loadData } = route.component;
-            console.log(route, loadData);
+            // console.log(route, loadData);
             if (loadData) {
                 const promise = new Promise((resolve, reject) => {
                     loadData(store).then(resolve).catch(resolve);
                 });
-                console.log('promise', promise);
                 promises.push(promise);
             }
         }

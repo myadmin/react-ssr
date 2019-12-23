@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getIndexList } from '../Store/index';
-import withStyle from '../withStyle';
 import styles from './Index.css';
+import withStyle from '../withStyle';
 
 function Index(props) {
     const [count, setCount] = useState(1);
