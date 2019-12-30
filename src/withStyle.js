@@ -8,13 +8,20 @@ function withStyle(WrappedComponent, styles) {
     //     }
     //     return <WrappedComponent {...props}/>
     // }
-    class Enhance extends React.Component {
-        render () {
-            if (this.props.staticContext) {
-                this.props.staticContext.css.push(styles._getCss());
-            }
-            return <WrappedComponent {...this.props}/>
+    // class Enhance extends React.Component {
+    //     render () {
+    //         if (this.props.staticContext) {
+    //             this.props.staticContext.css.push(styles._getCss());
+    //         }
+    //         return <WrappedComponent {...this.props}/>
+    //     }
+    // }
+
+    function Enhance (props) {
+        if (props.staticContext) {
+            props.staticContext.css.push(styles._getCss());
         }
+        return <WrappedComponent {...props}/>
     }
 
     hoistNonReactStatic(Enhance, WrappedComponent);

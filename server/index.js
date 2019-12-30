@@ -13,6 +13,7 @@ import proxy from 'http-proxy-middleware';
 import routes from '../src/App';
 import { getServerStore } from '../src/Store/store';
 import Header from '../src/Components/Header';
+import { csr } from '../server/config';
 
 const app = new Koa();
 const router = new Router();
@@ -41,7 +42,12 @@ router.get('*', async (ctx, next) => {
         await next();
     }
 
-    if (ctx.query._mode === 'csr') {
+    // if (ctx.query._mode === 'csr') {
+    //     console.log('开启csr降级处理');
+    //     return csrRender(ctx);
+    // }
+
+    if (csr) {
         console.log('开启csr降级处理');
         return csrRender(ctx);
     }
